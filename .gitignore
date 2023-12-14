@@ -1,0 +1,4 @@
+.pyc
+__pycache__
+login-credentials.ini
+local_storage_data.json
