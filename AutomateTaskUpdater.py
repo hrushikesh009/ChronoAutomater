@@ -92,7 +92,7 @@ class TimeSheetHandler:
         self.driver = driver
 
     def _wait_for_element(self, selector, timeout=5):
-        WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+        return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
 
     def switch_to_timesheet(self):
         time.sleep(2)
