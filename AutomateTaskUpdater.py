@@ -107,7 +107,7 @@ class TimeSheetHandler:
     def submit_time_block(self, task):
         try:
             self._wait_for_element("div[class=idle-timer]")
-            task_list = list(map(str.lower, task.split(",")))
+            task_list = list(map(str.lower, task.split("|")))
 
             work_time_element = self._wait_for_element("div[class=work-time]")
             work_time = work_time_element.get_attribute("innerText")
