@@ -34,8 +34,8 @@ OTP=12345
 # quotes are not required
 WORKPLACE=Client Name
 
-# Your task list, separated by commas
-TASKLIST=Refactoring LE CYC w.r.t to new Table Structure, 
+# Your task list, separated by pipe(|)
+TASKLIST=Refactoring LE CYC w.r.t to new Table Structure|
 ```
 
 4. **Download ChromeDriver**:
