@@ -87,6 +87,7 @@ class WorkspaceSwitcher:
                 self._click_client_icon(client)
                 break
 
+
 class TimeSheetHandler:
     def __init__(self, driver:webdriver.Chrome):
         self.driver = driver
@@ -106,7 +107,7 @@ class TimeSheetHandler:
 
     def submit_time_block(self, task):
         try:
-            self._wait_for_element("div[class=timesheet_tasks__selection]")
+            self._wait_for_element("div[class=idle-timer]")
             task_list = list(map(str.lower, task.split("|")))
 
             work_time_element = self._wait_for_element("div[class=work-time]")
