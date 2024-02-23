@@ -1,26 +1,14 @@
-import os
 import time
 
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from configuration import ChromeOptionsConfigurator
 from constants import CHROME_DRIVER_PATH
 from helper.helper import is_smaller_than_9_hours
-
-
-class ChromeOptionsConfigurator:
-    @staticmethod
-    def configure(driver_path):
-        options = Options()
-        prefs = {"profile.default_content_setting_values.notifications": 2}
-        options.add_argument("--headless=new")
-        options.add_experimental_option("prefs", prefs)
-        os.environ['PATH'] += driver_path
-        return options
 
 
 class LoginPage:
@@ -138,24 +126,20 @@ class TimeSheetHandler:
             print("Something Went Wrong! Please check your TimeSheet!")
 
 
-
-class AutomateTaskUpdater(webdriver.Chrome):
+class TaskUpdater(webdriver.Chrome):
     def __init__(self, driver_path=CHROME_DRIVER_PATH):
-        super(AutomateTaskUpdater, self).__init__(options=ChromeOptionsConfigurator.configure(driver_path))
+        super(TaskUpdater, self).__init__(options=ChromeOptionsConfigurator.configure(driver_path))
         self.implicitly_wait(30)
         self.maximize_window()
-
-        self.login_page = LoginPage(self)
-        self.workspace_switcher = WorkspaceSwitcher(self)
-        self.time_sheet_handler = TimeSheetHandler(self)
 
     def landing_page(self, page):
         self.get(page)
 
+    def perform_task(self):
+        pass
+
     def __exit__(self, exc_type, exc, traceback):
         self.quit()
-        # Below Code is used to keep the Browser Open
-        # while True:
-        #     pass
+
 
 

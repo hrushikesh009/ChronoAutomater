@@ -3,3 +3,4 @@ __pycache__
 login-credentials.ini
 local_storage_data.json
 selenium-env
+.vscode/

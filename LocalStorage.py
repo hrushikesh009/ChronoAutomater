@@ -1,6 +1,8 @@
-class LocalStorage:
+from selenium import webdriver
 
-    def __init__(self, driver) :
+
+class LocalStorage:
+    def __init__(self, driver: webdriver) :
         self.driver = driver
 
     def __len__(self):
