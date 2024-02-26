@@ -1,4 +1,5 @@
 import time
+from datetime import timedelta
 
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -8,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from configuration import ChromeOptionsConfigurator
 from constants import CHROME_DRIVER_PATH
-from helper.helper import is_smaller_than_9_hours
+from helper.helper import is_smaller_than_9_hours, parse_time_from_text
 
 
 class LoginPage:
@@ -92,9 +93,33 @@ class TimeSheetHandler:
 
     def _click_child_span(self, child):
         child.find_element(By.TAG_NAME, "span").click()
+    
+    def _handle_remaining_block_time(self):
+        """
+        Process the remaining time for the current block, if available.
+        If the remaining time is less than 5 minutes, sleep for the remaining time.
+        """
+        try:
+            element = self._wait_for_element("div.timer.mr-2")
+            remaining_time_str = element.get_attribute("innerText")
 
+            remaining_time = parse_time_from_text(remaining_time_str)
+            if not remaining_time:
+                return
+
+            if remaining_time < timedelta(minutes=5):
+                print(f"Remaining time is less than 5 minutes. Sleeping for the remaining time {remaining_time}.")
+                time.sleep(remaining_time.total_seconds())
+
+        except TimeoutException:
+            print("Time Block is Idle!")
+
+        except Exception as e:
+            print(f"Error handling remaining block time: {e}")
+        
     def submit_time_block(self, task):
         try:
+            self._handle_remaining_block_time()
             self._wait_for_element("div[class=idle-timer]")
             task_list = list(map(str.lower, task.split("|")))
 

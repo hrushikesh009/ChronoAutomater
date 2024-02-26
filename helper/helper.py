@@ -1,5 +1,6 @@
 import json
 import re
+from datetime import datetime,timedelta
 
 
 def save_cookies(data,filename='local_storage_data.json'):
@@ -25,4 +26,14 @@ def is_smaller_than_9_hours(time_string):
         return total_minutes < 540
     else:
         print("Unable To Extract Current Work Time")
+
+def parse_time_from_text(time_str):
+    """Converts time string (e.g., '22:23 min') to timedelta."""
+    try:
+        minutes = int(time_str.split(':')[0])
+        seconds = int(time_str.split(':')[1].split()[0])
+        return timedelta(minutes=minutes, seconds=seconds)
+    except ValueError:
+        print("Invalid time format:", time_str)
+        return None
 

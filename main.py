@@ -16,6 +16,7 @@ def initialize_local_storage(sbi_task_updater, data):
 
 
 def handle_login_and_save_cookies(sbi_task_updater, username, otp):
+    print("Currently on the login page.")
     sbi_task_updater.handle_login(username, otp)
 
     if "home" in sbi_task_updater.current_url:
@@ -43,7 +44,6 @@ def main():
                 sbi_task_updater.landing_page(config["landing_page"])
 
                 if "login" in sbi_task_updater.current_url:
-                    print("Currently on the login page.")
                     handle_login_and_save_cookies(sbi_task_updater, config["username"], config["otp"])
                 else:
                     print("Skipping! User is already Logged in.")
