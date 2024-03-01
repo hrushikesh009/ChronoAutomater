@@ -121,7 +121,7 @@ class TimeSheetHandler:
         try:
             self._handle_remaining_block_time()
             self._wait_for_element("div[class=idle-timer]")
-            task_list = list(map(str.lower, task.split("|")))
+            task_list = [t.lower().strip() for t in task.split("|")]
 
             work_time_element = self._wait_for_element("div[class=work-time]")
             work_time = work_time_element.get_attribute("innerText")
