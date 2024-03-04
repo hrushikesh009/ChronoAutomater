@@ -5,7 +5,10 @@ import time
 from configuration import ConfigReader
 from helper.helper import load_cookies, save_cookies
 from LocalStorage import LocalStorage
+from notifier import WindowsNotifier
 from task_automation_handlers import SBITaskUpdater
+
+notifier = WindowsNotifier()
 
 
 def initialize_local_storage(sbi_task_updater, data):
@@ -24,6 +27,11 @@ def handle_login_and_save_cookies(sbi_task_updater, username, otp):
         save_cookies(local_storage_data.items(), "local_storage_data.json")
         print("Successfully! Logged In.")
     else:
+        notifier.notify(
+                message="Alert!",
+                body="Login failed. Please check your credentials!",
+                duration=10
+            )
         print("Login failed. Please check your credentials.")
         exit(1)
 
@@ -54,6 +62,11 @@ def main():
             sbi_task_updater.perform_task(config["workplace"], config["tasklist"])
 
     except Exception as e:
+        notifier.notify(
+                message="Alert!",
+                body="Something Went Wrong! Please check your TimeSheet!",
+                duration=10
+            )
         print("Something Went Wrong! Please check your TimeSheet!")
 
 if __name__ == "__main__":

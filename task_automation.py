@@ -113,9 +113,6 @@ class TimeSheetHandler:
 
         except TimeoutException:
             print("Time Block is Idle!")
-
-        except Exception as e:
-            print(f"Error handling remaining block time: {e}")
         
     def submit_time_block(self, task):
         try:
@@ -146,9 +143,6 @@ class TimeSheetHandler:
 
         except TimeoutException:
             print("Skipping! Time Block is Running!")
-
-        except Exception as e:
-            print("Something Went Wrong! Please check your TimeSheet!")
 
 
 class TaskUpdater(webdriver.Chrome):
